@@ -5,7 +5,7 @@
 #include<string>
 
 enum DistanceMode {
-    Euclidian,
+    Euclidean,
     Manhattan
 };
 
@@ -44,7 +44,7 @@ std::string drawVoronoi(DistanceMode mode, int width, int height, int numOfPoint
 
                     // Generate array of distances to each point
                     for (int i = 0; i < numOfPoints; i++) {
-                        if (mode == Euclidian) distances[i] = euclideanDistance(ix, iy, points[i].x, points[i].y);
+                        if (mode == Euclidean) distances[i] = euclideanDistance(ix, iy, points[i].x, points[i].y);
                         if (mode == Manhattan) distances[i] = manhattanDistance(ix, iy, points[i].x, points[i].y);
                     }
 
@@ -94,7 +94,7 @@ int main(int argc, char** argv) {
         points[i].y = std::rand() % height;
     }
 
-    std::cout << drawVoronoi(Euclidian, width, height, numOfPoints, points, characters);
+    std::cout << drawVoronoi(Euclidean, width, height, numOfPoints, points, characters);
 
     return 0;
 }
