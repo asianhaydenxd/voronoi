@@ -131,10 +131,22 @@ Diagram parseArgs(int argc, char** argv) {
     diagram.characters  = DEF_CHARS;
     diagram.spread      = DEF_SPREAD;
 
+    int definedPoints = 0;
+
     // Iterate through the args
     for (int i = 0; i < argc; i++) {
         // Short name for each arg's name as a string
         std::string arg = std::string(argv[i]);
+
+        if (arg == "-p" || arg == "--point") {
+            i++;
+            if (i < argc) diagram.points[definedPoints].x = std::stoi(argv[i]);
+            i++;
+            if (i < argc) diagram.points[definedPoints].y = std::stoi(argv[i]);
+            definedPoints++;
+            diagram.numOfPoints = definedPoints;
+            continue;
+        }
 
         if (arg == "-w" || arg == "--width") {
             i++;
@@ -204,8 +216,10 @@ Diagram parseArgs(int argc, char** argv) {
 
     // Generate randomly positioned points
     for (int i = 0; i < diagram.numOfPoints; i++) {
-        diagram.points[i].x = std::rand() % diagram.width;
-        diagram.points[i].y = std::rand() % diagram.height;
+        if (i >= definedPoints) {
+            diagram.points[i].x = std::rand() % diagram.width;
+            diagram.points[i].y = std::rand() % diagram.height;
+        }
     }
 
     return diagram;
