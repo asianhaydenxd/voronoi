@@ -47,45 +47,45 @@ float euclideanDistance(int x1, int y1, int x2, int y2) {
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
 
-std::string drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Point points[], std::string characters, bool spread) {
+std::string drawVoronoi(Diagram diagram) {
     // Starting output for procedural generation
     std::string output = "";
 
     // Iterate through rows
-    for (int iy = 0; iy < height; iy++) {
+    for (int iy = 0; iy < diagram.height; iy++) {
         // Iterate through individual grid slots
-        for (int ix = 0; ix < width; ix++) {
+        for (int ix = 0; ix < diagram.width; ix++) {
             // Iterate through each point
-            for (int i = 0; i < numOfPoints; i++){
-                if (points[i].x == ix && points[i].y == iy) {
+            for (int i = 0; i < diagram.numOfPoints; i++){
+                if (diagram.points[i].x == ix && diagram.points[i].y == iy) {
                     output.append("()");
                     break;
                 }
                 // If the loop is over and the current slot still isn't any of the points
-                if (i + 1 == numOfPoints) {
-                    float distances[numOfPoints];
+                if (i + 1 == diagram.numOfPoints) {
+                    float distances[diagram.numOfPoints];
 
                     // Generate array of distances to each point
-                    for (int i = 0; i < numOfPoints; i++) {
-                        if (mode == Euclidean) distances[i] = euclideanDistance(ix, iy, points[i].x, points[i].y);
-                        if (mode == Manhattan) distances[i] = manhattanDistance(ix, iy, points[i].x, points[i].y);
+                    for (int i = 0; i < diagram.numOfPoints; i++) {
+                        if (diagram.mode == Euclidean) distances[i] = euclideanDistance(ix, iy, diagram.points[i].x, diagram.points[i].y);
+                        if (diagram.mode == Manhattan) distances[i] = manhattanDistance(ix, iy, diagram.points[i].x, diagram.points[i].y);
                     }
 
                     // Find the distance of the with the closest (minimum) distance
                     float min = distances[0];
 
-                    for (int i = 0; i < numOfPoints; i++) {
+                    for (int i = 0; i < diagram.numOfPoints; i++) {
                         if (distances[i] < min) {
                             min = distances[i];
                         }
                     }
 
                     // Find the point with the target distance and print the appropriate character
-                    for (int i = 0; i < numOfPoints; i++) {
+                    for (int i = 0; i < diagram.numOfPoints; i++) {
                         if (min == distances[i]) {
                             // If spread is true, take i and evenly distribute it across the character array
                             // Otherwise, just index the characters with i
-                            char character = characters[spread ? static_cast<int>(std::floor(characters.length() * i / numOfPoints) + 0.5) : i];
+                            char character = diagram.characters[diagram.spread ? static_cast<int>(std::floor(diagram.characters.length() * i / diagram.numOfPoints) + 0.5) : i];
 
                             output.append({character, character});
                             break;
@@ -169,7 +169,7 @@ int main(int argc, char** argv) {
 
     Diagram diagram = parseArgs(argc, argv);
 
-    std::cout << drawVoronoi(diagram.mode, diagram.width, diagram.height, diagram.numOfPoints, diagram.points, diagram.characters, diagram.spread);
+    std::cout << drawVoronoi(diagram);
 
     return 0;
 }
