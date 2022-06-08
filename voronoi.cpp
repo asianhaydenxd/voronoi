@@ -8,6 +8,7 @@
 #define DEF_HEIGHT 20
 #define DEF_NUM_OF_POINTS 4
 #define DEF_MODE Euclidean
+#define DEF_DISPLAY Double
 #define DEF_CHARS "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'."
 #define DEF_SPREAD true
 
@@ -16,6 +17,12 @@
 enum DistanceMode {
     Euclidean,
     Manhattan
+};
+
+enum DisplayStyle {
+    Single,
+    SingleSpace,
+    Double
 };
 
 struct Point {
@@ -30,6 +37,7 @@ struct Diagram {
     int numOfPoints;
 
     DistanceMode mode;
+    DisplayStyle display;
 
     std::string characters;
     bool spread;
@@ -87,7 +95,16 @@ std::string drawVoronoi(Diagram diagram) {
                             // Otherwise, just index the characters with i
                             char character = diagram.characters[diagram.spread ? static_cast<int>(std::floor(diagram.characters.length() * i / diagram.numOfPoints) + 0.5) : i];
 
-                            output.append({character, character});
+                            // Append the new character onto the output based on the diagram's character display style
+                            if (diagram.display == Single) {
+                                output += character;
+                            } else if (diagram.display == SingleSpace) {
+                                output += character;
+                                output += " ";
+                            } else if (diagram.display == Double) {
+                                output += character;
+                                output += character;
+                            }
                             break;
                         }
                     }
@@ -107,6 +124,7 @@ Diagram parseArgs(int argc, char** argv) {
     diagram.height      = DEF_HEIGHT;
     diagram.numOfPoints = DEF_NUM_OF_POINTS;
     diagram.mode        = DEF_MODE;
+    diagram.display     = DEF_DISPLAY;
     diagram.characters  = DEF_CHARS;
     diagram.spread      = DEF_SPREAD;
 
