@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<cmath>
 #include<ctime>
+#include<string>
 
 enum DistanceMode {
     Euclidian,
@@ -23,7 +24,10 @@ float euclideanDistance(int x1, int y1, int x2, int y2) {
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
 
-void drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Point points[], const char characters[]) {
+std::string drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Point points[], const char characters[]) {
+    // Starting output for procedural generation
+    std::string output = "";
+
     // Iterate through rows
     for (int iy = 0; iy < height; iy++) {
         // Iterate through individual grid slots
@@ -31,7 +35,7 @@ void drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Poin
             // Iterate through each point
             for (int i = 0; i < numOfPoints; i++){
                 if (points[i].x == ix && points[i].y == iy) {
-                    std::cout << "()";
+                    output.append("()");
                     break;
                 }
                 // If the loop is over and the current slot still isn't any of the points
@@ -59,15 +63,16 @@ void drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Poin
                             // Take i and evenly distribute it across the character array
                             char character = characters[static_cast<int>(std::floor(69 * i / numOfPoints) + 0.5)];
 
-                            std::cout << character << character;
+                            output.append({character, character});
                             break;
                         }
                     }
                 }
             }
         }
-        std::cout << "\n";
+        output.append("\n");
     }
+    return output;
 }
 
 int main(int argc, char** argv) {
@@ -89,7 +94,7 @@ int main(int argc, char** argv) {
         points[i].y = std::rand() % height;
     }
 
-    drawVoronoi(Euclidian, width, height, numOfPoints, points, characters);
+    std::cout << drawVoronoi(Euclidian, width, height, numOfPoints, points, characters);
 
     return 0;
 }
