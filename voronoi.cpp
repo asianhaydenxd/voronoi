@@ -162,6 +162,11 @@ Diagram parseArgs(int argc, char** argv) {
             continue;
         }
 
+        if (arg == "-s" || arg == "--spread") {
+            diagram.spread = true;
+            continue;
+        }
+
         if (arg == "-e" || arg == "--euclidean") {
             diagram.mode = Euclidean;
             continue;
@@ -172,7 +177,7 @@ Diagram parseArgs(int argc, char** argv) {
             continue;
         }
 
-        if (arg == "-s" || arg == "--single") {
+        if (arg == "-1" || arg == "--single") {
             diagram.display = Single;
             continue;
         }
@@ -182,7 +187,7 @@ Diagram parseArgs(int argc, char** argv) {
             continue;
         }
 
-        if (arg == "-d" || arg == "--double") {
+        if (arg == "-2" || arg == "--double") {
             diagram.display = Double;
             continue;
         }
