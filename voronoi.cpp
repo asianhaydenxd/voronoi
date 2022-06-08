@@ -16,7 +16,7 @@ float euclidDistance(int x1, int y1, int x2, int y2) {
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
 
-void drawVoronoi(int width, int height, int numOfPoints, Point points[]) {
+void drawVoronoi(int width, int height, int numOfPoints, Point points[], const char characters[]) {
     for (int iy = 0; iy < height; iy++) {
         for (int ix = 0; ix < width; ix++) {
             if (points[0].x == ix && points[0].y == iy) {
@@ -43,14 +43,11 @@ void drawVoronoi(int width, int height, int numOfPoints, Point points[]) {
                     }
                 }
 
-                if (min == distances[0]) {
-                    std::cout << ".";
-                } else if (min == distances[1]) {
-                    std::cout << "+";
-                } else if (min == distances[2]) {
-                    std::cout << "/";
-                } else if (min == distances[3]) {
-                    std::cout << ":";
+                for (int i = 0; i < numOfPoints; i++) {
+                    if (min == distances[i]) {
+                        std::cout << characters[i];
+                        break;
+                    }
                 }
             }
         }
@@ -66,6 +63,8 @@ int main(int argc, char** argv) {
 
     const int numOfPoints = 4;
 
+    const char characters[] = ".'`^\",:;Il!i><~+_-";
+
     Point points[numOfPoints];
 
     for (int i = 0; i < sizeof(points)/sizeof(points[0]); i++) {
@@ -73,7 +72,7 @@ int main(int argc, char** argv) {
         points[i].y = std::rand() % height;
     }
 
-    drawVoronoi(width, height, numOfPoints, points);
+    drawVoronoi(width, height, numOfPoints, points, characters);
 
     return 0;
 }
