@@ -133,9 +133,6 @@ int main(int argc, char** argv) {
         }
     }
 
-    // Characters sorted by brightness
-    const char characters[] = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
-
     Point points[numOfPoints];
 
     // Generate randomly positioned points
