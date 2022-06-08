@@ -3,6 +3,11 @@
 #include<cmath>
 #include<ctime>
 
+enum DistanceMode {
+    Euclidian,
+    Manhattan
+};
+
 struct Point {
     int x;
     int y;
@@ -12,11 +17,11 @@ float manhattanDistance(int x1, int y1, int x2, int y2) {
     return abs(x1 - x2) + abs(y1 - y2);
 }
 
-float euclidDistance(int x1, int y1, int x2, int y2) {
+float euclideanDistance(int x1, int y1, int x2, int y2) {
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
 
-void drawVoronoi(int width, int height, int numOfPoints, Point points[], const char characters[]) {
+void drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Point points[], const char characters[]) {
     for (int iy = 0; iy < height; iy++) {
         for (int ix = 0; ix < width; ix++) {
             if (points[0].x == ix && points[0].y == iy) {
@@ -32,7 +37,8 @@ void drawVoronoi(int width, int height, int numOfPoints, Point points[], const c
                 float distances[numOfPoints];
 
                 for (int i = 0; i < numOfPoints; i++) {
-                    distances[i] = euclidDistance(ix, iy, points[i].x, points[i].y);
+                    if (mode == Euclidian) distances[i] = euclideanDistance(ix, iy, points[i].x, points[i].y);
+                    if (mode == Manhattan) distances[i] = manhattanDistance(ix, iy, points[i].x, points[i].y);
                 }
 
                 float min = distances[0];
@@ -72,7 +78,7 @@ int main(int argc, char** argv) {
         points[i].y = std::rand() % height;
     }
 
-    drawVoronoi(width, height, numOfPoints, points, characters);
+    drawVoronoi(Euclidian, width, height, numOfPoints, points, characters);
 
     return 0;
 }
