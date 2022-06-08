@@ -24,7 +24,7 @@ float euclideanDistance(int x1, int y1, int x2, int y2) {
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
 
-std::string drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Point points[], const char characters[], bool spread) {
+std::string drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Point points[], std::string characters, bool spread) {
     // Starting output for procedural generation
     std::string output = "";
 
@@ -62,7 +62,7 @@ std::string drawVoronoi(DistanceMode mode, int width, int height, int numOfPoint
                         if (min == distances[i]) {
                             // If spread is true, take i and evenly distribute it across the character array
                             // Otherwise, just index the characters with i
-                            char character = characters[spread ? static_cast<int>(std::floor(69 * i / numOfPoints) + 0.5) : i];
+                            char character = characters[spread ? static_cast<int>(std::floor(characters.length() * i / numOfPoints) + 0.5) : i];
 
                             output.append({character, character});
                             break;
@@ -149,7 +149,7 @@ int main(int argc, char** argv) {
         points[i].y = std::rand() % height;
     }
 
-    std::cout << drawVoronoi(Euclidean, width, height, numOfPoints, points, characters.c_str(), spread);
+    std::cout << drawVoronoi(Euclidean, width, height, numOfPoints, points, characters, spread);
 
     return 0;
 }
