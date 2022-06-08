@@ -3,6 +3,11 @@
 #include<cmath>
 #include<ctime>
 
+struct Point {
+    int x;
+    int y;
+};
+
 float manhattanDistance(int x1, int y1, int x2, int y2) {
     return abs(x1 - x2) + abs(y1 - y2);
 }
@@ -17,30 +22,30 @@ int main(int argc, char** argv) {
     int width  = 20;
     int height = 10;
 
-    int points[4][2];
+    Point points[4];
 
     for (int i = 0; i < sizeof(points)/sizeof(points[0]); i++) {
-        points[i][0] = std::rand() % width;
-        points[i][1] = std::rand() % height;
+        points[i].x = std::rand() % width;
+        points[i].y = std::rand() % height;
 
-        std::cout << std::to_string(points[i][0]) << "\n" << std::to_string(points[i][1]) << "\n";
+        std::cout << std::to_string(points[i].x) << "\n" << std::to_string(points[i].y) << "\n";
     }
 
     for (int iy = 0; iy < height; iy++) {
         for (int ix = 0; ix < width; ix++) {
-            if (points[0][0] == ix && points[0][1] == iy) {
+            if (points[0].x == ix && points[0].y == iy) {
                 std::cout << "@";
-            } else if (points[1][0] == ix && points[1][1] == iy) {
+            } else if (points[1].x == ix && points[1].y == iy) {
                 std::cout << "@";
-            } else if (points[2][0] == ix && points[2][1] == iy) {
+            } else if (points[2].x == ix && points[2].y == iy) {
                 std::cout << "@";
-            } else if (points[3][0] == ix && points[3][1] == iy) {
+            } else if (points[3].x == ix && points[3].y == iy) {
                 std::cout << "@";
             } else {
-                float d1 = euclidDistance(ix, iy, points[0][0], points[0][1]);
-                float d2 = euclidDistance(ix, iy, points[1][0], points[1][1]);
-                float d3 = euclidDistance(ix, iy, points[2][0], points[2][1]);
-                float d4 = euclidDistance(ix, iy, points[3][0], points[3][1]);
+                float d1 = euclidDistance(ix, iy, points[0].x, points[0].y);
+                float d2 = euclidDistance(ix, iy, points[1].x, points[1].y);
+                float d3 = euclidDistance(ix, iy, points[2].x, points[2].y);
+                float d4 = euclidDistance(ix, iy, points[3].x, points[3].y);
 
                 float min = d1;
                 if (d2 < min) {
