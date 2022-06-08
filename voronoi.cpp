@@ -25,13 +25,13 @@ void drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Poin
     for (int iy = 0; iy < height; iy++) {
         for (int ix = 0; ix < width; ix++) {
             if (points[0].x == ix && points[0].y == iy) {
-                std::cout << "@";
+                std::cout << "@ ";
             } else if (points[1].x == ix && points[1].y == iy) {
-                std::cout << "@";
+                std::cout << "@ ";
             } else if (points[2].x == ix && points[2].y == iy) {
-                std::cout << "@";
+                std::cout << "@ ";
             } else if (points[3].x == ix && points[3].y == iy) {
-                std::cout << "@";
+                std::cout << "@ ";
             } else {
 
                 float distances[numOfPoints];
@@ -51,7 +51,7 @@ void drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Poin
 
                 for (int i = 0; i < numOfPoints; i++) {
                     if (min == distances[i]) {
-                        std::cout << characters[i];
+                        std::cout << characters[i] << " ";
                         break;
                     }
                 }
@@ -64,7 +64,7 @@ void drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Poin
 int main(int argc, char** argv) {
     std::srand(std::time(0));
 
-    const int width  = 100;
+    const int width  = 50;
     const int height = 50;
 
     const int numOfPoints = 4;
