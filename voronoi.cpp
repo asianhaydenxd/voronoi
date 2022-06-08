@@ -67,7 +67,7 @@ int main(int argc, char** argv) {
 
     Point points[numOfPoints];
 
-    for (int i = 0; i < sizeof(points)/sizeof(points[0]); i++) {
+    for (int i = 0; i < numOfPoints; i++) {
         points[i].x = std::rand() % width;
         points[i].y = std::rand() % height;
     }
