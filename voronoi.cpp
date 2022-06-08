@@ -4,14 +4,14 @@
 #include<ctime>
 #include<string>
 
-#define DEF_WIDTH 20
-#define DEF_HEIGHT 20
+#define DEF_WIDTH         20
+#define DEF_HEIGHT        20
 #define DEF_NUM_OF_POINTS 4
-#define DEF_MODE Euclidean
-#define DEF_DISPLAY Double
-#define DEF_POINT_STR "()"
-#define DEF_CHARS "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'."
-#define DEF_SPREAD true
+#define DEF_MODE          Euclidean
+#define DEF_DISPLAY       Double
+#define DEF_POINT_STR     "()"
+#define DEF_CHARS         "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'."
+#define DEF_SPREAD        true
 
 #define MAX_POINTS 1000
 
