@@ -3,7 +3,7 @@
 #include<cmath>
 #include<ctime>
 
-float distance(int x1, int y1, int x2, int y2) {
+float euclidDistance(int x1, int y1, int x2, int y2) {
     return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
 }
 
@@ -33,10 +33,10 @@ int main(int argc, char** argv) {
             } else if (points[3][0] == ix && points[3][1] == iy) {
                 std::cout << "@";
             } else {
-                float d1 = distance(ix, iy, points[0][0], points[0][1]);
-                float d2 = distance(ix, iy, points[1][0], points[1][1]);
-                float d3 = distance(ix, iy, points[2][0], points[2][1]);
-                float d4 = distance(ix, iy, points[3][0], points[3][1]);
+                float d1 = euclidDistance(ix, iy, points[0][0], points[0][1]);
+                float d2 = euclidDistance(ix, iy, points[1][0], points[1][1]);
+                float d3 = euclidDistance(ix, iy, points[2][0], points[2][1]);
+                float d4 = euclidDistance(ix, iy, points[3][0], points[3][1]);
 
                 float min = d1;
                 if (d2 < min) {
