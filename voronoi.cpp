@@ -64,8 +64,8 @@ void drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Poin
 int main(int argc, char** argv) {
     std::srand(std::time(0));
 
-    const int width  = 20;
-    const int height = 10;
+    const int width  = 100;
+    const int height = 50;
 
     const int numOfPoints = 4;
 
