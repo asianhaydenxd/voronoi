@@ -9,6 +9,7 @@
 #define DEF_NUM_OF_POINTS 4
 #define DEF_MODE Euclidean
 #define DEF_DISPLAY Double
+#define DEF_POINT_STR "()"
 #define DEF_CHARS "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'."
 #define DEF_SPREAD true
 
@@ -39,6 +40,7 @@ struct Diagram {
     DistanceMode mode;
     DisplayStyle display;
 
+    std::string pointStr;
     std::string characters;
     bool spread;
 
@@ -66,7 +68,7 @@ std::string drawVoronoi(Diagram diagram) {
             // Iterate through each point
             for (int i = 0; i < diagram.numOfPoints; i++){
                 if (diagram.points[i].x == ix && diagram.points[i].y == iy) {
-                    output.append("()");
+                    output.append(diagram.pointStr);
                     break;
                 }
                 // If the loop is over and the current slot still isn't any of the points
@@ -125,6 +127,7 @@ Diagram parseArgs(int argc, char** argv) {
     diagram.numOfPoints = DEF_NUM_OF_POINTS;
     diagram.mode        = DEF_MODE;
     diagram.display     = DEF_DISPLAY;
+    diagram.pointStr    = DEF_POINT_STR;
     diagram.characters  = DEF_CHARS;
     diagram.spread      = DEF_SPREAD;
 
@@ -154,6 +157,12 @@ Diagram parseArgs(int argc, char** argv) {
         if (arg == "-c" || arg == "--chars" || arg == "--characters") {
             i++;
             if (i < argc) diagram.characters = std::string(argv[i]);
+            continue;
+        }
+
+        if (arg == "-P" || arg == "--pc" || arg == "--point-char") {
+            i++;
+            if (i < argc) diagram.pointStr = std::string(argv[i]);
             continue;
         }
 
