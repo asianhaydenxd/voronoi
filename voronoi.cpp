@@ -51,7 +51,8 @@ void drawVoronoi(DistanceMode mode, int width, int height, int numOfPoints, Poin
 
                 for (int i = 0; i < numOfPoints; i++) {
                     if (min == distances[i]) {
-                        std::cout << characters[i] << characters[i];
+                        char character = characters[static_cast<int>(std::floor(69 * i / numOfPoints) + 0.5)];
+                        std::cout << character << character;
                         break;
                     }
                 }
@@ -69,7 +70,7 @@ int main(int argc, char** argv) {
 
     const int numOfPoints = 4;
 
-    const char characters[] = ".'`^\",:;Il!i><~+_-";
+    const char characters[] = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
 
     Point points[numOfPoints];
 
