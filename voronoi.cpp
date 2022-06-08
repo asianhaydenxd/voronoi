@@ -11,6 +11,8 @@
 #define DEF_CHARS "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'."
 #define DEF_SPREAD true
 
+#define MAX_POINTS 1000
+
 enum DistanceMode {
     Euclidean,
     Manhattan
@@ -31,6 +33,8 @@ struct Diagram {
 
     std::string characters;
     bool spread;
+
+    Point points[MAX_POINTS];
 };
 
 // Manhattan distance: a + b
@@ -151,23 +155,21 @@ Diagram parseArgs(int argc, char** argv) {
         }
     }
 
+    // Generate randomly positioned points
+    for (int i = 0; i < diagram.numOfPoints; i++) {
+        diagram.points[i].x = std::rand() % diagram.width;
+        diagram.points[i].y = std::rand() % diagram.height;
+    }
+
     return diagram;
 }
 
 int main(int argc, char** argv) {
     std::srand(std::time(0));
 
-    const Diagram diagram = parseArgs(argc, argv);
+    Diagram diagram = parseArgs(argc, argv);
 
-    Point points[diagram.numOfPoints];
-
-    // Generate randomly positioned points
-    for (int i = 0; i < diagram.numOfPoints; i++) {
-        points[i].x = std::rand() % diagram.width;
-        points[i].y = std::rand() % diagram.height;
-    }
-
-    std::cout << drawVoronoi(diagram.mode, diagram.width, diagram.height, diagram.numOfPoints, points, diagram.characters, diagram.spread);
+    std::cout << drawVoronoi(diagram.mode, diagram.width, diagram.height, diagram.numOfPoints, diagram.points, diagram.characters, diagram.spread);
 
     return 0;
 }
