@@ -78,10 +78,50 @@ std::string drawVoronoi(DistanceMode mode, int width, int height, int numOfPoint
 int main(int argc, char** argv) {
     std::srand(std::time(0));
 
-    const int width  = 50;
-    const int height = 50;
+    int width  = 50;
+    int height = 50;
 
-    const int numOfPoints = 4;
+    int numOfPoints = 4;
+
+    DistanceMode mode = Euclidean;
+
+    for (int i = 0; i < argc; i++) {
+        std::string arg = std::string(argv[i]);
+
+        if (arg == "-w" || arg == "--width") {
+            i++;
+            if (i < argc) {
+                width = std::stoi(argv[i]);
+            }
+            continue;
+        }
+
+        if (arg == "-h" || arg == "--height") {
+            i++;
+            if (i < argc) {
+                height = std::stoi(argv[i]);
+            }
+            continue;
+        }
+
+        if (arg == "-n" || arg == "--num-of-points") {
+            i++;
+            if (i < argc) {
+                numOfPoints = std::stoi(argv[i]);
+            }
+            continue;
+        }
+
+        if (arg == "-e" || arg == "--euclidean") {
+            mode = Euclidean;
+            continue;
+        }
+
+        if (arg == "-m" || arg == "--manhattan") {
+            mode = Manhattan;
+            continue;
+        }
+    }
 
     // Characters sorted by brightness
     const char characters[] = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
