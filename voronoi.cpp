@@ -61,8 +61,8 @@ void drawVoronoi(int width, int height, int numOfPoints, Point points[]) {
 int main(int argc, char** argv) {
     std::srand(std::time(0));
 
-    int width  = 20;
-    int height = 10;
+    const int width  = 20;
+    const int height = 10;
 
     const int numOfPoints = 4;
 
