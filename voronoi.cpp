@@ -85,6 +85,8 @@ int main(int argc, char** argv) {
 
     DistanceMode mode = Euclidean;
 
+    std::string characters = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
+
     for (int i = 0; i < argc; i++) {
         std::string arg = std::string(argv[i]);
 
@@ -112,6 +114,14 @@ int main(int argc, char** argv) {
             continue;
         }
 
+        if (arg == "-c" || arg == "--chars" || arg == "--characters") {
+            i++;
+            if (i < argc) {
+                characters = std::string(argv[i]);
+            }
+            continue;
+        }
+
         if (arg == "-e" || arg == "--euclidean") {
             mode = Euclidean;
             continue;
@@ -134,7 +144,7 @@ int main(int argc, char** argv) {
         points[i].y = std::rand() % height;
     }
 
-    std::cout << drawVoronoi(Euclidean, width, height, numOfPoints, points, characters);
+    std::cout << drawVoronoi(Euclidean, width, height, numOfPoints, points, characters.c_str());
 
     return 0;
 }
