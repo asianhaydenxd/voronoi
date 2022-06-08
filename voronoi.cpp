@@ -212,6 +212,40 @@ Diagram parseArgs(int argc, char** argv) {
             diagram.display = Double;
             continue;
         }
+
+        if (arg[0] == '-') {
+            for (int i = 1; i < arg.length(); i++) {
+                if (arg[i] == 'i') {
+                    diagram.spread = false;
+                    continue;
+                }
+                if (arg[i] == 's') {
+                    diagram.spread = true;
+                    continue;
+                }
+                if (arg[i] == 'e') {
+                    diagram.mode = Euclidean;
+                    continue;
+                }
+                if (arg[i] == 'm') {
+                    diagram.mode = Manhattan;
+                    continue;
+                }
+                if (arg[i] == '1') {
+                    diagram.display = Single;
+                    continue;
+                }
+                if (arg[i] == 'S') {
+                    diagram.display = SingleSpace;
+                    continue;
+                }
+                if (arg[i] == '2') {
+                    diagram.display = Double;
+                    continue;
+                }
+            }
+            continue;
+        }
     }
 
     // Generate randomly positioned points
