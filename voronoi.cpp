@@ -88,6 +88,8 @@ int main(int argc, char** argv) {
 
     std::string characters = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
 
+    bool spread = true;
+
     for (int i = 0; i < argc; i++) {
         std::string arg = std::string(argv[i]);
 
@@ -123,6 +125,11 @@ int main(int argc, char** argv) {
             continue;
         }
 
+        if (arg == "-i" || arg == "--iter" || arg == "--iterative") {
+            spread = false;
+            continue;
+        }
+
         if (arg == "-e" || arg == "--euclidean") {
             mode = Euclidean;
             continue;
@@ -142,7 +149,7 @@ int main(int argc, char** argv) {
         points[i].y = std::rand() % height;
     }
 
-    std::cout << drawVoronoi(Euclidean, width, height, numOfPoints, points, characters.c_str(), false);
+    std::cout << drawVoronoi(Euclidean, width, height, numOfPoints, points, characters.c_str(), spread);
 
     return 0;
 }
