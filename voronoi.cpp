@@ -4,6 +4,13 @@
 #include<ctime>
 #include<string>
 
+#define DEF_WIDTH 20
+#define DEF_HEIGHT 20
+#define DEF_NUM_OF_POINTS 4
+#define DEF_MODE Euclidean
+#define DEF_CHARS "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'."
+#define DEF_SPREAD true
+
 enum DistanceMode {
     Euclidean,
     Manhattan
@@ -12,6 +19,18 @@ enum DistanceMode {
 struct Point {
     int x;
     int y;
+};
+
+struct Diagram {
+    int width;
+    int height;
+
+    int numOfPoints;
+
+    DistanceMode mode;
+
+    std::string characters;
+    bool spread;
 };
 
 // Manhattan distance: a + b
@@ -76,80 +95,79 @@ std::string drawVoronoi(DistanceMode mode, int width, int height, int numOfPoint
     return output;
 }
 
-int main(int argc, char** argv) {
-    std::srand(std::time(0));
+Diagram parseArgs(int argc, char** argv) {
+    Diagram diagram;
 
-    int width  = 50;
-    int height = 50;
+    // Set default values
+    diagram.width       = DEF_WIDTH;
+    diagram.height      = DEF_HEIGHT;
+    diagram.numOfPoints = DEF_NUM_OF_POINTS;
+    diagram.mode        = DEF_MODE;
+    diagram.characters  = DEF_CHARS;
+    diagram.spread      = DEF_SPREAD;
 
-    int numOfPoints = 4;
-
-    DistanceMode mode = Euclidean;
-
-    std::string characters = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
-
-    bool spread = true;
-
+    // Iterate through the args
     for (int i = 0; i < argc; i++) {
+        // Short name for each arg's name as a string
         std::string arg = std::string(argv[i]);
 
         if (arg == "-w" || arg == "--width") {
             i++;
-            if (i < argc) {
-                width = std::stoi(argv[i]);
-            }
+            if (i < argc) diagram.width = std::stoi(argv[i]);
             continue;
         }
 
         if (arg == "-h" || arg == "--height") {
             i++;
-            if (i < argc) {
-                height = std::stoi(argv[i]);
-            }
+            if (i < argc) diagram.height = std::stoi(argv[i]);
             continue;
         }
 
         if (arg == "-n" || arg == "--num-of-points") {
             i++;
-            if (i < argc) {
-                numOfPoints = std::stoi(argv[i]);
-            }
+            if (i < argc) diagram.numOfPoints = std::stoi(argv[i]);
             continue;
         }
 
         if (arg == "-c" || arg == "--chars" || arg == "--characters") {
             i++;
-            if (i < argc) {
-                characters = std::string(argv[i]);
-            }
+            if (i < argc) diagram.characters = std::string(argv[i]);
             continue;
         }
 
         if (arg == "-i" || arg == "--iter" || arg == "--iterative") {
-            spread = false;
+            diagram.spread = false;
             continue;
         }
 
         if (arg == "-e" || arg == "--euclidean") {
-            mode = Euclidean;
+            diagram.mode = Euclidean;
             continue;
         }
 
         if (arg == "-m" || arg == "--manhattan") {
-            mode = Manhattan;
+            diagram.mode = Manhattan;
             continue;
         }
     }
 
-    Point points[numOfPoints];
+    return diagram;
+}
+
+int main(int argc, char** argv) {
+    std::srand(std::time(0));
+
+    const Diagram diagram = parseArgs(argc, argv);
+
+    Point points[diagram.numOfPoints];
 
     // Generate randomly positioned points
-    for (int i = 0; i < numOfPoints; i++) {
-        points[i].x = std::rand() % width;
-        points[i].y = std::rand() % height;
+    for (int i = 0; i < diagram.numOfPoints; i++) {
+        points[i].x = std::rand() % diagram.width;
+        points[i].y = std::rand() % diagram.height;
     }
 
-    std::cout << drawVoronoi(Euclidean, width, height, numOfPoints, points, characters, spread);
+    std::cout << drawVoronoi(diagram.mode, diagram.width, diagram.height, diagram.numOfPoints, points, diagram.characters, diagram.spread);
 
     return 0;
 }
