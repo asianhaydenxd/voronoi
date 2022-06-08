@@ -171,6 +171,21 @@ Diagram parseArgs(int argc, char** argv) {
             diagram.mode = Manhattan;
             continue;
         }
+
+        if (arg == "-s" || arg == "--single") {
+            diagram.display = Single;
+            continue;
+        }
+
+        if (arg == "-S" || arg == "--single-space") {
+            diagram.display = SingleSpace;
+            continue;
+        }
+
+        if (arg == "-d" || arg == "--double") {
+            diagram.display = Double;
+            continue;
+        }
     }
 
     // Generate randomly positioned points
