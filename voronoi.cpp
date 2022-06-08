@@ -27,8 +27,6 @@ int main(int argc, char** argv) {
     for (int i = 0; i < sizeof(points)/sizeof(points[0]); i++) {
         points[i].x = std::rand() % width;
         points[i].y = std::rand() % height;
-
-        std::cout << std::to_string(points[i].x) << "\n" << std::to_string(points[i].y) << "\n";
     }
 
     for (int iy = 0; iy < height; iy++) {
@@ -42,29 +40,27 @@ int main(int argc, char** argv) {
             } else if (points[3].x == ix && points[3].y == iy) {
                 std::cout << "@";
             } else {
-                float d1 = euclidDistance(ix, iy, points[0].x, points[0].y);
-                float d2 = euclidDistance(ix, iy, points[1].x, points[1].y);
-                float d3 = euclidDistance(ix, iy, points[2].x, points[2].y);
-                float d4 = euclidDistance(ix, iy, points[3].x, points[3].y);
+                float distances[sizeof(points) / sizeof(points[0])];
 
-                float min = d1;
-                if (d2 < min) {
-                    min = d2;
-                }
-                if (d3 < min) {
-                    min = d3;
-                }
-                if (d4 < min) {
-                    min = d4;
+                for (int i = 0; i < sizeof(points) / sizeof(points[0]); i++) {
+                    distances[i] = euclidDistance(ix, iy, points[i].x, points[i].y);
                 }
 
-                if (min == d1) {
+                float min = distances[0];
+
+                for (int i = 0; i < sizeof(points) / sizeof(points[0]); i++) {
+                    if (distances[i] < min) {
+                        min = distances[i];
+                    }
+                }
+
+                if (min == distances[0]) {
                     std::cout << ".";
-                } else if (min == d2) {
+                } else if (min == distances[1]) {
                     std::cout << "+";
-                } else if (min == d3) {
+                } else if (min == distances[2]) {
                     std::cout << "/";
-                } else if (min == d4) {
+                } else if (min == distances[3]) {
                     std::cout << ":";
                 }
             }
